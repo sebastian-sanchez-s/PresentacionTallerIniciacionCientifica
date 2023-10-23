@@ -1,0 +1,58 @@
+\ProvidesPackage{beamerthemecustom}
+
+\input xkeyval
+
+\mode<presentation>
+
+  \definecolor{chromeyellow}{rgb}{1.0, 0.65, 0.0}
+  \definecolor{cyan2}{rgb}{0.0, 0.72, 0.92}
+  \definecolor{darkturquoise}{rgb}{0.0, 0.81, 0.82}
+  \definecolor{darkorange}{rgb}{1.0, 0.55, 0.0}
+  \definecolor{darklavender}{rgb}{0.45, 0.31, 0.59}
+  \definecolor{darkorchid}{rgb}{0.6, 0.2, 0.8}
+  \definecolor{darkpastelblue}{rgb}{0.47, 0.62, 0.8}
+
+  \setbeamercolor*{palette primary}{fg=white,bg=black}
+  \setbeamercolor*{palette secondary}{fg=white,bg=black}
+  \setbeamercolor*{palette tertiary}{fg=white,bg=black}
+  \setbeamercolor*{palette quaternary}{fg=white,bg=black}
+
+  \setbeamercolor{section in toc}{fg=black,bg=white}
+
+  \setbeamercolor{normal text}{bg=white,fg=black}
+  \setbeamercolor*{block title}{bg=black,fg=white}
+  \setbeamercolor*{block body}{bg=white,fg=black}
+
+  \newenvironment<>{Teorema}[1][]
+  {
+    \setbeamercolor{block title}{bg=darkorange,fg=black}
+    \begin{block}{Teorema\ifstrempty{#1}{}{~(#1)}}
+  }{\end{block}}
+
+  \newenvironment<>{Proposicion}[1][]
+  {
+    \setbeamercolor{block title}{bg=chromeyellow,fg=black}
+    \begin{block}{Proposición\ifstrempty{#1}{}{~(#1)}}
+  }{\end{block}}
+
+  \newenvironment<>{Definicion}[1][]
+  {
+    \setbeamercolor{block title}{bg=darkturquoise,fg=black}
+    \begin{block}{Definición\ifstrempty{#1}{}{~(#1)}}
+  }{\end{block}}
+
+  \setbeamercolor{titlelike}{parent=palette primary,fg=blue}
+  \setbeamercolor{frametitle}{parent=palette primary}%{bg=black,fg=white}
+
+  \setbeamercolor*{titlelike}{parent=palette primary}
+
+  \usetheme{default}
+
+  \setbeamercovered{transparent}
+  \setbeamertemplate{footline}[frame number]
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{blocks}[rounded][shadow=true]
+
+  \setbeamersize{text margin left=0.4cm,text margin right=0.4cm}
+\mode
+<all>
