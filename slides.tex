@@ -317,16 +317,21 @@ Y un complejo simplicial es la generalización de una triangulación.
 \begin{frame}\frametitle{Voronoi}
 \begin{columns}
   \column{.6\linewidth}
-  Una celda Voronoi \(V_p\) consiste en los puntos que están más cercanos a \(p\) que
-  a cualquier otro punto \(q\) de \(P\).
-  \begin{equation*}
-    V_p \coloneqq \left\{ x\in \R^N \colon \abs{xp} \le \abs{xq}\quad \forall q\ne p \right\}.
-  \end{equation*}
-  El diagrama de Voronoi de un conjunto de puntos, \(V_P\), es la colección de celdas
-  de Voronoi de sus elementos.
-  \begin{equation*}
-    V_P \coloneqq \left\{ V_p \colon p\in P \right\}.
-  \end{equation*}
+  \begin{itemize}[itemsep=1em]
+    \item<1->
+    Una celda Voronoi \(V_p\) consiste en los puntos que están más cercanos a \(p\) que
+    a cualquier otro punto \(q\) de \(P\).
+    \begin{equation*}
+      V_p \coloneqq \left\{ x\in \R^N \colon \abs{xp} \le \abs{xq}\quad \forall q\ne p \right\}.
+    \end{equation*}
+
+    \item<2->
+    El diagrama de Voronoi de un conjunto de puntos, \(V_P\), es la colección de celdas
+    de Voronoi de sus elementos.
+    \begin{equation*}
+      V_P \coloneqq \left\{ V_p \colon p\in P \right\}.
+    \end{equation*}
+  \end{itemize}
 
   \column{.4\linewidth}
   \begin{figure}[H]
@@ -482,6 +487,7 @@ Y un complejo simplicial es la generalización de una triangulación.
   \end{scope}
 \end{tikzpicture}
 \end{center}
+  \caption{No satisface ninguna hipótesis del teorema.}
 \end{figure}
 
 \end{frame}
@@ -580,6 +586,12 @@ Y un complejo simplicial es la generalización de una triangulación.
     donde \(\medialAxis(X)\) son los \(y\in \R^N\) que
     tienen al menos 2 puntos más cercanos a \(X\). 
   \end{columns}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+  ¿Podemos relajar las condiciones?
+\end{center} 
 \end{frame}
 
 \subsection{Complejo de Rips}
@@ -737,7 +749,7 @@ Y un complejo simplicial es la generalización de una triangulación.
 
 \begin{frame}\frametitle{Computar el Complejo de \v{C}ech}
 \begin{block}{Idea}
-  Buscar todas las posibles bolas de cobertura mínimas de radio menor a \(\epsilon\).
+  Buscar todas las posibles bolas de cobertura mínima de radio menor a \(\epsilon\).
 \end{block}
 
 \pause%
