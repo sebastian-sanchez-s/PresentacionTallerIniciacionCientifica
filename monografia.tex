@@ -1,0 +1,497 @@
+\documentclass[legalpaper,12pt]{article}
+
+% Page set up
+\usepackage[margin=2.5cm, top=1.5cm]{geometry}
+
+% Document font and symbols
+\usepackage{mathptmx} % Times New Roman
+\usepackage{amsmath}
+\usepackage{amsfonts,amsthm,amssymb}
+\usepackage{esint}
+
+% Language formatting
+\usepackage[utf8]{inputenc}
+\usepackage[spanish, es-noshorthands]{babel}
+
+% Graph and Drawings
+\usepackage[usenames,dvipsnames]{xcolor}
+
+\usepackage{tikz,float}
+\usepackage{wrapfig}
+\usetikzlibrary{babel}
+\usetikzlibrary{patterns}
+
+\usepackage[framemethod=default]{mdframed}
+\usepackage{framed}
+
+% Tools
+\usepackage{hyperref}
+\usepackage{etoolbox,mathtools}
+\usepackage[shortlabels]{enumitem}
+
+% Mdframed template
+\mdfsetup{innertopmargin=5pt,%
+	frametitlealignment=\raggedright,%
+	frametitlefont=\texttt,%
+	linewidth=2pt,%
+	topline=false,rightline=false, bottomline=false,%
+	frametitleaboveskip=\dimexpr-1\ht\strutbox\relax,}
+
+%
+% Color
+%
+% -- Frame (print color aside)
+\colorlet{TheoremFrameColor}{Salmon}
+\colorlet{PropositionFrameColor}{Peach}
+\colorlet{CorollaryFrameColor}{Dandelion}
+\colorlet{DefinitionFrameColor}{BlueGreen!50!cyan!30}
+
+\colorlet{ProofFrameColor}{black}
+
+\colorlet{ExampleColor}{black}
+\colorlet{ExerciseColor}{black}
+\colorlet{SolutionColor}{black!60}
+
+% -- Text
+\definecolor{TheoremFontColor}{HTML}{000000}
+\definecolor{PropositionFontColor}{HTML}{000000}
+\definecolor{CorollaryFontColor}{HTML}{000000}
+\definecolor{DefinitionFontColor}{HTML}{000000}
+
+% -- Background
+\definecolor{TheoremBgColor}{HTML}{FFFFFF}
+\definecolor{PropositionBgColor}{HTML}{FFFFFF}
+\definecolor{CorollaryBgColor}{HTML}{FFFFFF}
+\definecolor{DefinitionBgColor}{HTML}{FFFFFF}
+
+%
+% Environment
+%
+
+% -- Theorem Env
+\newcounter{TheoremCounter}
+\newenvironment{Teorema}[1][]{%
+	\refstepcounter{TheoremCounter}%
+	\mdfsetup{%
+		frametitle={%
+		\tikz[baseline=(current bounding box.center),outer sep=0pt]
+		\node[rectangle,color=TheoremFontColor,fill=TheoremFrameColor]
+		{Teorema~\theTheoremCounter\ifstrempty{#1}{.}{:~#1}};},%
+		linecolor=TheoremFrameColor,%
+		backgroundcolor=TheoremBgColor,
+	}%
+	\begin{mdframed}[]\relax%
+	}{\end{mdframed}}
+
+% -- Proposition Env
+\newcounter{PropositionCounter}
+\newenvironment{Proposicion}[1][]{%
+	\refstepcounter{PropositionCounter}%
+	\mdfsetup{%
+		frametitle={%
+		\tikz[baseline=(current bounding box.center),outer sep=0pt]
+		\node[rectangle,color=PropositionFontColor,fill=PropositionFrameColor]
+		{Proposición~\thePropositionCounter\ifstrempty{#1}{.}{:~#1}};},%
+		linecolor=PropositionFrameColor,%
+		backgroundcolor=PropositionBgColor,
+	}%
+	\begin{mdframed}[]\relax%
+	}{\end{mdframed}}
+
+% -- Corollary Env
+\newcounter{CorollaryCounter}
+\newenvironment{Corolario}[1][]{%
+	\refstepcounter{CorollaryCounter}%
+	\mdfsetup{%
+		frametitle={%
+		\tikz[baseline=(current bounding box.center),outer sep=0pt]
+		\node[rectangle,color=CorollaryFontColor,fill=CorollaryFrameColor]
+		{Corolario~\theCorollaryCounter.\ifstrempty{#1}{}{:~(#1)}};},%
+		linecolor=CorollaryFrameColor,%
+		backgroundcolor=CorollaryBgColor,
+	}%
+	\begin{mdframed}[]\relax%
+	}{\end{mdframed}}
+
+% -- Definition Env
+\newcounter{DefinitionCounter}
+\newenvironment{Definicion}[1][]{%
+	\refstepcounter{DefinitionCounter}%
+	\mdfsetup{%
+		frametitle={%
+		\tikz[baseline=(current bounding box.center),outer sep=0pt]
+		\node[rectangle,color=DefinitionFontColor,fill=DefinitionFrameColor]
+		{Definición~\theDefinitionCounter:~#1};},%
+		linecolor=DefinitionFrameColor,%
+		backgroundcolor=DefinitionBgColor,%
+	}%
+	\begin{mdframed}[]\relax%
+	}{\end{mdframed}}
+
+% -- Proof Env
+\newenvironment{Demostracion}[1][]
+{%
+	{\noindent\ttfamily DEMOSTRACIÓN\ifstrempty{#1}{}{ DE #1}~}
+	\fontfamily{cmr}\selectfont
+}%
+{%
+  \tikz{\draw (0,0) -- (\linewidth, 0) node[above] {\scriptsize\(\blacksquare\)};}
+}
+
+% Example Env
+\newcounter{ExampleCounter}
+\newenvironment{Ejemplo}[1][]%
+{
+	\refstepcounter{ExampleCounter}%
+	\mdfsetup{%
+		frametitle={%
+		\tikz[baseline=(current bounding box.center),outer sep=0pt]
+		\node[rectangle,fill=white]
+		{EJEMPLO \theExampleCounter\ifstrempty{#1}{}{:~#1}};},%
+		linecolor=ExampleColor,%
+		backgroundcolor=white,
+	}%
+	\begin{mdframed}[]\relax%
+	}{\end{mdframed}}
+
+% -- Exercise Env
+\newenvironment{Ejercicio}[1][]%
+	{%
+		\vspace{1ex}
+		\textcolor{ExerciseColor}{\hrule height 1pt}
+		\vspace{5pt}
+		{\noindent\texttt{EJERCICIOS}~}\\[1ex]
+	}%
+	{%
+		\vspace{5pt}
+		\textcolor{ExerciseColor}{\hrule height 1pt}
+		\vspace{1ex}
+	}%
+
+% -- Aligned Cases
+\newcommand{\X}{\mathbb{X}}
+\newcommand{\Y}{\mathbb{Y}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+
+\newcommand{\XX}{\mathcal{X}}
+\newcommand{\BB}{\mathcal{B}}
+\newcommand{\KK}{\mathcal{K}}
+\newcommand{\CC}{\mathcal{C}}
+\newcommand{\RR}{\mathcal{R}}
+\newcommand{\II}{\mathcal{I}}
+\newcommand{\FF}{\mathcal{F}}
+\newcommand{\MM}{\mathrm{M}}
+
+\DeclareMathOperator{\Rips}{R}
+\DeclareMathOperator{\Cech}{\check{C}}
+\DeclareMathOperator{\Del}{Del}
+
+\DeclareMathOperator{\centre}{center}
+\DeclareMathOperator{\reach}{reach}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\aff}{aff}
+\DeclareMathOperator{\card}{card}
+
+% Resize abs and norm
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\|}{\|}
+\makeatletter
+\let\oldabs\abs
+\def\abs{\@ifstar{\oldabs}{\oldabs*}}
+\let\oldnorm\norm
+\def\norm{\@ifstar{\oldnorm}{\oldnorm*}}
+\makeatother
+
+\usepackage{subfiles}
+
+\title{
+Monografía de Pregado\\
+``Reconstrucción de Superficies por Nubes de Puntos."\\
+}
+\author{\normalsize Sebastián Sánchez}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Dada una muestra finita \(\X \subset \R^n\) de una superficie, nos gustaría
+desarrollar herramientas que nos permitan reconstruir esta mediante mediante
+un complejo simplicial (una triangulación). La principal aplicación de interés 
+es el modelaje 3D, no obstante, las herramientas se extienden a otras aplicaciones
+tales como reducción de dimensionalidad.
+\end{abstract}
+
+\tableofcontents
+
+\newpage
+
+\section{Preliminares}
+
+\subsection{Topología}
+
+Un espacio topológico es una tupla \((X,\tau)\) donde 
+\(X\) es un conjunto y \(\tau\) es una colección de subconjuntos de \(X\)
+cuyos elementos se dicen abiertos y satisfacen que: \(\varnothing\) y \(X\)
+son abiertos, la unión (arbitraria) de abiertos es un abierto y la intersección
+finita de abiertos es un abierto. 
+
+Aquí lidiaremos con espacios métricos. Un espacio métrico
+es una tupla \((X,d)\) donde \(X\) es un conjunto y \(d\colon X\times X \to \R_{\ge 0}\) es una
+función llamada métrica que satisface: \(d(x,y) = 0\) solo cuando \(y = x\), \(d(x,y) = d(y,x)\) y \(d(x,y) \le
+d(x,z) + d(z,y)\) para todo trío \(x,y,z\in X\).
+
+Se dice que una colección de conjuntos \(B\) es base de una topología \(\tau\) si todo abierto 
+se puede escribir como unión de elementos de \(B\), alternativamente, decimos que \(\tau\) es la 
+topología generada por \(B\). Dado un espacio métrico \((X,d)\), \(X\) es un espacio
+topológico con la topología generada por las bolas \(B(x,r) \coloneqq \lbrace y\in X\colon d(x,y) < r\rbrace\). 
+
+Una función entre espacios topológicos se dice continua si preimágenes de abiertos son abiertos.
+Una función continua biyectiva que tiene inversa continua y biyectiva se dice homeomorfismo (o función
+bicontinua). 
+Cuando existe un homeomofirsmo entre espacios topológicos \(X\) y \(Y\) denotamos \(X \approx Y\).
+Equivalentemente, dos espacios \(X\) y \(Y\) son homeomorfos si existen mapas \(f\colon X \to Y\)
+y \(g\colon Y \to X\) continuos tal que \(f\circ g = Id_X\) y \(g\circ f = Id_Y\).   
+
+Una homotopía entre funciones \(f,g\colon X \to Y\) es una función \(H\colon [0,1]\times X \to Y\)
+tal que \(H\) es continua y \(H(0,\cdot) = f(\cdot)\) y \(H(1,\cdot) = g(\cdot)\). Si
+existe una homotopía entre \(f\) y \(g\) denotamos \(f\sim g\).   
+Decimos que dos espacios \(X\) y \(Y\) son homotópicamente equivalentes si existen
+mapas \(f\colon X \to Y\) y \(g \colon Y \to X\) tal que \(f\circ g \sim Id_X\)
+y \(g\circ f \sim Id_Y\). 
+
+\subsection{Complejos Simpliciales}
+
+Un complejo simplicial (geométrico) es una colección de símplices que contiene 
+todas las caras e intersecciones de sus elementos. Un \(d\)-símplice se define
+como la cáscara convexa \(\conv \lbrace v_0, \ldots, v_d\rbrace\) de \(d+1\) puntos
+llamados vértices que son 
+afinmente independientes. La cáscara convexa de un conjunto \(C\subset\R^n\) es
+el subespacio convexo más chico (en el sentido de subconjunto) que contiene
+a \(C\). Se dice que \(v_0, \ldots, v_d \in \R^n\) son afínmente independientes
+si los vectores relativos \(v_1 -v_0, v_2-v_0, \ldots,v_d-v_0\) son linealmente
+independientes. Se dice que \(\tau\) es una cara de un \(d\)-símplice \(\sigma\) 
+si es un \(k\)-símplice (\(k<d\)) cuyos vértices son todos vértices de \(\sigma\).
+
+El espacio subyancente de un complejo simplicial \(\KK\) es la unión de todos
+sus símplices, denotado \(\bigcup \KK \coloneqq \bigcup_{\sigma\in\KK} \sigma\). 
+
+Un complejo simplicial (abstracto) \(\KK\) es una colección finita de conjuntos
+tal que para todo \(\sigma\in\KK\) se tiene que \(\tau\in \KK\) para todo \(\tau\subset\sigma\).
+Los elementos de un complejo simplicial se dicen símplices. La dimensión de un símplice
+corresponde a su cantidad de elementos menos uno i.e. \(\dim\sigma = \card \sigma-1\). 
+La dimensión de \(\varnothing\) es \(-1\). Usualmente vamos a tratar con complejos
+simpliciales abstractos cuyos vértices están en \(\R^n\). 
+
+Una triangulación de un espacio topológico \(X\) es una tupla \((\KK,\iota)\) donde
+\(\KK\) es un complejo simplicial y \(\iota\colon \bigcup \KK \to X\) es un homeomorfismo.  
+
+\subsection{Geometría Diferencial}
+
+Una \(d\)-variedad es un espacio topológico hausdorff (que separa puntos) y paracompacto
+(que todo cubrimiento tiene un subcubrimiento localmente finito) que localmente se asemeja
+a \(\R^d\). Vale decir, para todo punto \(x\in X\) existe un \(U\in X\) abierto
+tal que \(U\approx V\) donde \(V\) es un abierto en \(\R^d\).   
+
+Una \(d\)-variedad \(\MM\) tiene una estructura diferencial si existen homeomorfismos
+\(\phi_{\alpha} \colon U_{\alpha} \to V_{\alpha}\) tal que \(\MM = \bigcup_{\alpha} U_{\alpha}\)
+y los mapas de transición \(\phi_{\alpha}\circ\phi_{\beta}^{-1}\) son diferenciables.
+A la colección de homeomorfimos \(\lbrace \phi_{\alpha} \rbrace_{\alpha}\) se le 
+llama atlas. La misma variedad puede tener distintos atlases, por ello, una \(d\)-variedad
+diferenciable es una tupla \((\MM, A)\) donde \(A\) es un atlas diferenciable.
+
+Una \(d\)-variedad riemanniana es una tupla \((\MM,g)\) donde \(\MM\) es un \(d\)-variedad topológica
+y \(g = \lbrace g_p \rbrace_{p\in \MM}\) es una collección de productos internos defindos positivos
+actuando sobre el espacio tangente de un punto \(p\in \MM\).
+\begin{displaymath}
+  g_p \colon T_p \MM \times T_p \MM \to \R_{\ge 0}.
+\end{displaymath}
+A \(g\) se le dice métrica riemanniana o tensor de riemann. 
+
+\section{Complejos Fundamentales}
+
+\subsection{Complejo de Delaunay}
+
+Sea \(\X = \left\{ x_1, \dots, x_k \right\} \in \R^n\) un conjunto de puntos en posición
+general. Definamos para cada \(x_i\in \X\) el conjunto
+\begin{displaymath}
+  V_i(\X) \coloneqq \lbrace x\in \R^n \colon \dist(x,x_i) \le \dist(x,x_j)\quad \forall i\ne j\rbrace.
+\end{displaymath}
+de los puntos más cercanos a \(x_i\) que a cualquier otro punto de \(\X\). Si no enumeramos
+los puntos simplemente escribimos \(V_{x}(\X)\) y omitimos \(\X\) si es claro del contexto.  
+Denotamos por \(\bigcap V_{\Y} \coloneqq \bigcap_{y\in \Y} V_{y}\) a la región asociada
+a \(\Y\subset \X\). Las regiones \(\bigcap V_{\Y}\) se conocen como objetos de Voronoi.
+
+\begin{Definicion}[Complejo de Delaunay]
+  Decimos que \(V = \left\{ v_0, \ldots, v_d \right\} \subset \X\) es un símplice de Delaunay
+  si 
+  \[
+    V_{v_0}(\X) \cap V_{v_1}(\X) \cap \ldots \cap V_{v_d}(\X) \ne \varnothing.
+  \]
+  El complejo de Delaunay se compone de todos los símplices de Delaunay y se denota
+  \(\Del(\X)\).
+\end{Definicion}
+
+Una caracterización útil de los símplices de Delaunay, es que la bola
+que los circumscribe no contiene en su interior otros puntos de la muestra.
+
+\begin{Proposicion}
+  \(\Y\in\Del(\X)\) si y solo si existe una \(n\)-bola cerrada \(B\) tal que 
+  \(\Y\subset \partial B\) y \(\X\cap B^{\circ} = \varnothing\).  
+\end{Proposicion}
+\begin{Demostracion}
+  \framebox{\(\Rightarrow\):}
+  Sea \(\Y = \lbrace y_0, \dots, y_d \rbrace\). Luego, existe \(y\in\R^n\)
+  tal que \(r\coloneqq \dist(y,y_j) = \dist(y,y_i)\) para todo \(0\le i,j \le d\).  
+  Luego, \(B = B(y,r)\) por construcción satisface que \(\Y \subset \partial B\).
+  Supongamos que \(x\in \X\cap B^{\circ} \ne \varnothing\). Luego, 
+  \(\dist(x,y) < r\) y por lo tanto \(y\not\in \bigcap V_{\Y}\). Contradicción.  
+
+  \framebox{\(\Leftarrow\):} El centro de la bola está a la misma distancia de \(\Y\),
+  por lo tanto \(\bigcap V_{\Y} \ne \varnothing\). 
+\end{Demostracion}
+
+Con esta caracterización podemos probar el siguiente resultado bien conocido.
+
+\begin{Teorema}
+  \(\Del(\X)\) es una triangulación de \(\conv\X\).  
+\end{Teorema}
+\begin{Demostracion}
+  Pongamos \(\iota = Id_{\R^n}\).
+
+  \framebox{\(\Rightarrow\):} Sea \(x\in \bigcup \Del(\X)\). Luego, existe \(\Y\in \Del(\X)\) tal que
+  \(x\in \conv\Y\) y por lo tanto \(x\in \conv \X\).  
+
+  \framebox{\(\Leftarrow\):} Sea \(x\in \conv \X\). Separamos dos casos:
+  \begin{itemize}
+   \item Caso 1: \(\card\X \le N+1\): Entonces existe un única bola que circumscribe a \(\X\) y 
+     por lo tanto \(\X\in\Del(\X)\).
+   \item Caso 2: \(\card\X > N+1\): Tomar \(\Y = \lbrace y_1, \ldots, y_d \rbrace\) los \(d\) 
+     puntos más cercanos a \(x\) ordenados por distancias crecientes. Notar \(B(y_d,\dist(x,y_d)) \cap \X \subset \Y\).
+     Sea \(y_{d+1}\) el siguiente punto más lejano a \(x\). 
+     Luego, \(x\in \conv (y_1, \dots, y_{N+1})\) y existe una única
+     esfera que circumscribe a \(y_1, \dots, y_{N+1}\) porque los puntos están en posición
+     general.
+  \end{itemize}
+\end{Demostracion}
+
+Dado \(\MM \subset \R^n\) una superficie (con o sin frontera), denotamos
+por \(\Del_{\MM}(\X)\) al complejo formado por aquellos símplices cuyos objetos
+de Voronoi asociados que intersectan a \(\MM\). En símbolos:
+\begin{displaymath}
+  \Del_M(\X)
+  \coloneqq
+  \left\{ 
+    V \subset \X \colon
+    \bigcap_{v\in V} V_{v} \cap \MM \ne \varnothing
+  \right\}.
+\end{displaymath}
+
+Decimos que \(\X\) tiene la propiedad de la intersección genérica para
+una \(d\)-variedad sin borde \(X\)
+si para todo \(\Y \subset \X\) el polihedro convexo \(P = \bigcap V_{\Y}\) 
+satisface:
+\begin{enumerate}
+  \item \(X \cap P\) es vacío ó
+  \item \(X \cap P\) tiene dimensión \(d+\dim P-n\) y \(X \cap P^{\circ} = (X\cap P)^{\circ}\). 
+\end{enumerate}
+\(\X\) tiene la propiedad de intersección genérica para \(\MM\)  
+si se cumple lo anterior con \(X=\MM\) y \(X=\partial \MM\) si \(\MM\) tiene borde.   
+
+Decimos que \(\X\) tiene la propiedad de la bola cerrada con \(\MM\) si
+para cualquier \(\Y\subset\X\) se satisface que:
+\begin{enumerate}
+  \item \(\bigcap V_{\Y} \cap \MM\) es vacía o una \((d-\dim\Y)\)-bola cerrada y
+  \item \(\bigcap V_{\Y} \cap \partial\MM\) es vacía o \((d-\dim\Y - 1)\)-bola cerrada.
+\end{enumerate}
+
+\begin{Teorema}[Teorema 4.3 de~\cite{edelsbrunnershah}]
+  Sea \(\MM\) una \(d\)-variedad compacta en \(\R^n\) con o sin borde y \(\X\)
+  una muestra que tiene la propiedad de la intersección genérica
+  y la propiedad de la bola cerrada con \(\MM\). Entonces \(\bigcup \Del_{\MM}(\X) \approx \MM\). 
+\end{Teorema}
+
+\subsection{Complejo de Cech y Rips}
+
+\begin{Definicion}[Complejo de Cech]
+  Sea \(\epsilon > 0\). \(V = \lbrace v_0, \dots, v_d \rbrace \subset \X\) es un \(d\)-símplice
+  de Cech a escala \(\epsilon\) si
+  \[
+    B_{\epsilon}(v_0) \cap \ldots \cap B_{\epsilon}(v_d) \ne \varnothing.
+  \]
+  El complejo de Cech se compone de los símplices de Cech y se denota
+  por \(\Cech_{\epsilon}(\X)\). 
+\end{Definicion}
+
+Otras caracterizaciones útiles son:
+\begin{enumerate}
+  \item Un símplice está en el complejo de Cech a escala \(\epsilon\) si y solo si la bola de cobertura mínima
+  de sus vértices tiene radio menor que \(\epsilon\). 
+
+  \item El complejo de Cech se corresponde con el nervio de \(\X^{\oplus \epsilon}\). 
+\end{enumerate}
+
+La última de las caracterizaciones nos permite aplicar el teorema del nervio
+y nos da que \(\Cech_{\epsilon} \simeq \bigcup_{x\in\X} B_{\epsilon}(x)
+= \X^{\oplus\epsilon}\), así que queda ver si \(\X^{\oplus\epsilon}\simeq \MM\).
+
+\begin{Teorema}[Proposición 3.2 de~\cite{smale}]
+  Sea \(\MM\) es una \(d\)-variedad riemanniana compacta y suave. Sea \(\X\) una muestra
+  \(\epsilon/2\)-densa de \(\MM\) con \(\epsilon < \sqrt{3/5} \reach \MM\).
+  Entonces
+  \(\MM\) es un retracto por deformación de \(\X^{\oplus \epsilon}\). 
+  En particular, \(\X^{\oplus\epsilon}\simeq \MM\).   
+\end{Teorema}
+
+El complejo de Cech es caro de computar, por ello, se suele usar el complejo de Rips,
+que relaja las condiciones.
+
+\begin{Definicion}[Complejo de Rips]
+  Sea \(\epsilon > 0\). \(V = \lbrace v_0, \dots, v_d \rbrace \subset \X\) es un \(d\)-símplice
+  de Rips a escala \(\epsilon\) si
+  \begin{displaymath}
+    \dist(u,v) < \epsilon \quad \forall u,v \in V.
+  \end{displaymath}
+  El complejo de Rips se compone de los símplices de Rips y se denota
+  por \(\Rips_{\epsilon}(\X)\).
+\end{Definicion}
+
+Bajo algunas condiciones, el complejo de Rips se parece al complejo de Cech.
+\begin{Proposicion}[Teorema 2.5 de~\cite{desilva}]
+  Sea \(\X\subset \R^n\) finito y \(\epsilon > 0\). Luego,
+  \begin{displaymath}
+    \Cech_{\epsilon}(\X) \subset \Rips_{2\epsilon}(\X) \subset \Cech_{2\epsilon \rho_n}(\X)
+  \end{displaymath}
+  donde \(\rho_n \coloneqq \sqrt{\frac{2n}{n+1}}\). 
+\end{Proposicion}
+
+\begin{thebibliography}{9}
+\bibitem{desilva}
+De Silva, V., \& Ghrist, R. (2007). Coverage in sensor networks via persistent homology. Algebraic \& Geometric Topology, 7(1), 339-358.
+
+\bibitem{edelsbrunnershah}
+Edelsbrunner, H., \& Shah, N. R. (1994, June). Triangulating topological spaces. In Proceedings of the tenth annual symposium on Computational geometry (pp. 285-292).
+
+\bibitem{smale}
+Niyogi, P., Smale, S., Weinberger, S. (2008). Finding the homology of submanifolds with high confidence from random samples. Discrete \& Computational Geometry, 39, 419-441.
+
+\bibitem{welzl}
+Welzl, E. (2005, June). Smallest enclosing disks (balls and ellipsoids). In New Results and New Trends in Computer Science: Graz, Austria, June 20–21, 1991 Proceedings (pp. 359-370). Berlin, Heidelberg: Springer Berlin Heidelberg.
+
+\end{thebibliography}
+
+\appendix
+
+\section{Más sobre Delaunay}
+
+\section{Bola de Cobertura Mínima}
+
+\end{document}
