@@ -191,6 +191,8 @@
 \DeclareMathOperator{\Cech}{\check{C}}
 \DeclareMathOperator{\Del}{Del}
 
+\DeclareMathOperator{\argmin}{arg\,min}
+
 \DeclareMathOperator{\centre}{center}
 \DeclareMathOperator{\reach}{reach}
 \DeclareMathOperator{\dist}{dist}
@@ -331,7 +333,7 @@ los puntos simplemente escribimos \(V_{x}(\X)\) y omitimos \(\X\) si es claro de
 Denotamos por \(\bigcap V_{\Y} \coloneqq \bigcap_{y\in \Y} V_{y}\) a la región asociada
 a \(\Y\subset \X\). Las regiones \(\bigcap V_{\Y}\) se conocen como objetos de Voronoi.
 
-\begin{Definicion}[Complejo de Delaunay]
+\begin{Definicion}[Complejo de Delaunay]\label{def:delaunay}
   Decimos que \(V = \left\{ v_0, \ldots, v_d \right\} \subset \X\) es un símplice de Delaunay
   si 
   \[
@@ -424,7 +426,7 @@ para cualquier \(\Y\subset\X\) se satisface que:
   y luego lo extendemos.
 
   Definamos los conjuntos \(B_i \coloneqq \lbrace \bigcap V_{\Y} \cap \MM \colon \dim \Y = d - i\rbrace\).
-  Por la propiedad de la bola cerrada, \(B_i\) es una \((d-\dim\Y = i)\)-bola.
+  Por la propiedad de la bola cerrada, todo elemento de \(B_i\) es (homeomorfo a) una \((d-\dim\Y = i)\)-bola.
   
   Sea \(N = 2^{\card\X}\) e identifiquemos cada \(\Y\subset \X\) con un vector canónico \(e_{\Y} \in \R^N\).
 
@@ -432,7 +434,7 @@ para cualquier \(\Y\subset\X\) se satisface que:
   \dim\Y = d, \bigcap V_{\Y}\cap \MM \ne \varnothing\right\}\) y consideremos
   el mapa \(f_0 \colon B_0 \to \KK_0\) dado por \(\bigcap V_{\Y} \cap \MM \mapsto e_{\Y}\).
 
-  \underline{Paso Inductivo:} Sea \(1 \le j \je d-1\).
+  \underline{Paso Inductivo:} Sea \(1 \le j \le d-1\).
 \end{Demostracion}
 
 \subsection{Complejo de Cech y Rips}
@@ -466,6 +468,9 @@ y nos da que \(\Cech_{\epsilon} \simeq \bigcup_{x\in\X} B_{\epsilon}(x)
   \(\MM\) es un retracto por deformación de \(\X^{\oplus \epsilon}\). 
   En particular, \(\X^{\oplus\epsilon}\simeq \MM\).   
 \end{Teorema}
+\begin{Demostracion}
+
+\end{Demostracion}
 
 El complejo de Cech es caro de computar, por ello, se suele usar el complejo de Rips,
 que relaja las condiciones.
@@ -474,7 +479,7 @@ que relaja las condiciones.
   Sea \(\epsilon > 0\). \(V = \lbrace v_0, \dots, v_d \rbrace \subset \X\) es un \(d\)-símplice
   de Rips a escala \(\epsilon\) si
   \begin{displaymath}
-    \dist(u,v) < \epsilon \quad \forall u,v \in V.
+    \dist(u,v) \le \epsilon \quad \forall u,v \in V.
   \end{displaymath}
   El complejo de Rips se compone de los símplices de Rips y se denota
   por \(\Rips_{\epsilon}(\X)\).
@@ -482,12 +487,38 @@ que relaja las condiciones.
 
 Bajo algunas condiciones, el complejo de Rips se parece al complejo de Cech.
 \begin{Proposicion}[Teorema 2.5 de~\cite{desilva}]
-  Sea \(\X\subset \R^n\) finito y \(\epsilon > 0\). Luego,
+  Sea \(\X\subset \R^n\) finito y \(\epsilon > 0\). Sea 
+  \(\rho_n \coloneqq \sqrt{\frac{n}{n+1}}\). Luego,
   \begin{displaymath}
     \Cech_{\epsilon}(\X) \subset \Rips_{2\epsilon}(\X) \subset \Cech_{2\epsilon \rho_n}(\X)
   \end{displaymath}
-  donde \(\rho_n \coloneqq \sqrt{\frac{2n}{n+1}}\). 
 \end{Proposicion}
+\begin{Demostracion}
+  Para la inclusión de la izquierda: Sea \(\lbrace v_0, \dots, v_d \rbrace\) un símplice
+  de Cech. Sea \(x\in \bigcap B_{\epsilon}(v_i) \ne \varnothing\). Luego,
+  \(\dist(v_i,v_j) \le \dist(v_i, x) + \dist(x, v_j) \le 2\epsilon\). 
+
+  Para la inclusión de la derecha: Sea \(V = \lbrace v_0, \dots v_d \rbrace\) un símplice de Rips.
+  Supongamos el peor caso en que \(\dist(v_i,v_j) = 2\epsilon\) para todo \(i\ne j\). 
+  Luego, \(V\) se puede identificar el símplice en \(\R^{d+1}\) formado por 
+  los vectores \(\lbrace 2\epsilon\cdot e_1, \dots, 2\epsilon\cdot e_{d+1}\rbrace \subset \R^{d+1}\). 
+  La bola que circumscribe a \(V\) tiene como centro 
+  \(c = \frac{2\epsilon}{d+1} (e_1 + \cdots + e_{d+1}) = \frac{2\epsilon}{d+1} (1,\dots,1)\).
+  Aplicando pitágoras
+  \begin{displaymath}
+    r_{d} \coloneqq 
+    \sqrt{\norm{2\epsilon\cdot e_i}^2 - \norm{c}^2} 
+    =
+    \sqrt{(2\epsilon)^2 - \frac{(2\epsilon)^2}{d+1}}
+    =
+    2\epsilon \sqrt{\frac{d}{d+1}}
+    =
+    2\epsilon \rho_d
+  \end{displaymath}
+  vemos que la bola de cobertura mínima tiene radio \(r_{d}\) y por lo tanto \(V\) es un 
+  símplice de Cech a escala \(r_{d}\). Notando que \(\rho_d \le \rho_n\) para \(d+1 \le n\)
+  y que no hay \(n+1\) símplices en \(\R^n\) se sigue el resultado.
+\end{Demostracion}
 
 \begin{thebibliography}{9}
 \bibitem{desilva}
@@ -507,6 +538,27 @@ Welzl, E. (2005, June). Smallest enclosing disks (balls and ellipsoids). In New 
 \appendix
 
 \section{Más sobre Delaunay}
+
+El complejo de Delaunay se puede ver como un caso particular de un problema de optimización.
+Sea \(U\) un dominio (abierto conexo y acotado) en \(\R^n\) triangulable. 
+Sea \(f\colon U \to \R\) una función continua. El error de interpolación lineal
+en norma \(p\in [1,\infty]\) de una triangulación \(T\) de \(U\) se define como:
+\begin{displaymath}
+  E_p(U,T,f) \coloneqq \norm{f - L_f}_{p}
+\end{displaymath}
+donde \(L_f\) es una interpolación lineal de \(f\) en \(T\).
+
+\begin{Teorema}%[\cite{chenoptimal}]
+  Sea \(\X\) un conjunto finito de \(\R^n\).  
+  El complejo de Delaunay~\ref{def:delaunay} es el que minimiza el error de interpolación
+  de la función \(\norm{\cdot}^2 \colon \conv \X \to \R\) entre todos los complejos simpliciales
+  con conjunto de vértices en \(\X\). 
+  \begin{displaymath}
+    E_p(\conv\X, \Del(\X), \norm{\cdot}^2)
+    =
+    \argmin_{T} E_p(\conv\X, T, \norm{\cdot}^2).
+  \end{displaymath}
+\end{Teorema}
 
 \section{Bola de Cobertura Mínima}
 
