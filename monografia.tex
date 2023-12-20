@@ -135,7 +135,8 @@
 	\fontfamily{cmr}\selectfont
 }%
 {%
-  \tikz{\draw (0,0) -- (\linewidth, 0) node[above] {\scriptsize\(\blacksquare\)};}
+  \newline
+  \tikz{\draw (0,0) -- (\linewidth,0) node[above] {\scriptsize\(\blacksquare\)};}
 }
 
 % Example Env
@@ -298,7 +299,7 @@ Una triangulación de un espacio topológico \(X\) es una tupla \((\KK,\iota)\) 
 
 Una \(d\)-variedad es un espacio topológico hausdorff (que separa puntos) y paracompacto
 (que todo cubrimiento tiene un subcubrimiento localmente finito) que localmente se asemeja
-a \(\R^d\). Vale decir, para todo punto \(x\in X\) existe un \(U\in X\) abierto
+a \(\R^d\). Vale decir, para todo punto \(x\in X\) existe un \(U\in X\) abierto vecindad de \(x\) 
 tal que \(U\approx V\) donde \(V\) es un abierto en \(\R^d\).   
 
 Una \(d\)-variedad \(\MM\) tiene una estructura diferencial si existen homeomorfismos
@@ -409,8 +410,8 @@ si se cumple lo anterior con \(X=\MM\) y \(X=\partial \MM\) si \(\MM\) tiene bor
 Decimos que \(\X\) tiene la propiedad de la bola cerrada con \(\MM\) si
 para cualquier \(\Y\subset\X\) se satisface que:
 \begin{enumerate}
-  \item \(\bigcap V_{\Y} \cap \MM\) es vacía o una \((d-\dim\Y)\)-bola cerrada y
-  \item \(\bigcap V_{\Y} \cap \partial\MM\) es vacía o \((d-\dim\Y - 1)\)-bola cerrada.
+  \item \(\bigcap V_{\Y} \cap \MM\) es vacía o (homeomorfo) una \((d-\dim\Y)\)-bola cerrada y
+  \item \(\bigcap V_{\Y} \cap \partial\MM\) es vacía o (homeomorfo) a una \((d-\dim\Y - 1)\)-bola cerrada.
 \end{enumerate}
 
 \begin{Teorema}[Teorema 4.3 de~\cite{edelsbrunnershah}]
@@ -418,6 +419,21 @@ para cualquier \(\Y\subset\X\) se satisface que:
   una muestra que tiene la propiedad de la intersección genérica
   y la propiedad de la bola cerrada con \(\MM\). Entonces \(\bigcup \Del_{\MM}(\X) \approx \MM\). 
 \end{Teorema}
+\begin{Demostracion}
+  La demostración va por inducción. En cada paso establecemos un homeomorfismo
+  y luego lo extendemos.
+
+  Definamos los conjuntos \(B_i \coloneqq \lbrace \bigcap V_{\Y} \cap \MM \colon \dim \Y = d - i\rbrace\).
+  Por la propiedad de la bola cerrada, \(B_i\) es una \((d-\dim\Y = i)\)-bola.
+  
+  Sea \(N = 2^{\card\X}\) e identifiquemos cada \(\Y\subset \X\) con un vector canónico \(e_{\Y} \in \R^N\).
+
+  \underline{Caso Base:} Definamos \(\KK_0 \coloneqq \left\{ e_{\Y} \colon \Y\subset\X, 
+  \dim\Y = d, \bigcap V_{\Y}\cap \MM \ne \varnothing\right\}\) y consideremos
+  el mapa \(f_0 \colon B_0 \to \KK_0\) dado por \(\bigcap V_{\Y} \cap \MM \mapsto e_{\Y}\).
+
+  \underline{Paso Inductivo:} Sea \(1 \le j \je d-1\).
+\end{Demostracion}
 
 \subsection{Complejo de Cech y Rips}
 
