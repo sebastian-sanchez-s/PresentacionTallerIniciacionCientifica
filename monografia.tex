@@ -463,12 +463,71 @@ y nos da que \(\Cech_{\epsilon} \simeq \bigcup_{x\in\X} B_{\epsilon}(x)
 
 \begin{Teorema}[Proposición 3.2 de~\cite{smale}]
   Sea \(\MM\) es una \(d\)-variedad riemanniana compacta y suave. Sea \(\X\) una muestra
-  \(\epsilon/2\)-densa de \(\MM\) con \(\epsilon < \sqrt{3/5} \reach \MM\).
+  \(\epsilon\)-densa y \(\epsilon\)-ruidosa de \(\MM\) con \(\epsilon < \sqrt{3/5} \reach \MM\).
   Entonces
   \(\MM\) es un retracto por deformación de \(\X^{\oplus \epsilon}\). 
   En particular, \(\X^{\oplus\epsilon}\simeq \MM\).   
 \end{Teorema}
 \begin{Demostracion}
+  Notar que para \(\epsilon < \reach\MM\) la proyección \(\pi\colon\X^{\oplus\epsilon} \to \MM\)
+  está bien definida. Mostraremos que el retracto viene dado por
+  \begin{displaymath}
+  \begin{aligned}
+    H\colon [0,1]\times\X^{\oplus\epsilon} &\to \MM\\
+    (t,x) &\mapsto t\pi(x) + (1-t)x
+  \end{aligned}.
+  \end{displaymath}
+  para \(\epsilon < \sqrt{3/5}\reach\MM\). 
+
+  Para esto debemos probar que para todo \(x\in\X^{\oplus\epsilon}\), el 
+  segmento dado por \(H(\cdot,x)\) está completamente contenido en \(\X^{\oplus\epsilon}\).
+
+  Notése que si \(m\in\MM\), entonces \(\pi^{-1}(m) = (T_m\MM)^{\perp} \cap \X^{\oplus\epsilon} \cap B_{\reach\MM}(m)\).
+  Por lo tanto, basta revisar los \(x\in\pi^{-1}(m)\). Distinguimos dos casos:
+
+  \(\bullet\)~\(x\in B_{\epsilon}(x_i)\cap\pi^{-1}(m)\) para algún \(x_i\in\X\cap B_{\epsilon}(m)\). Entonces
+  el segmento de \(x\) a \(m\) está completamente contenido en \(B_{\epsilon}(x_i)\) y tenemos el resultado.
+
+  \(\bullet\)~\(x\in B_{\epsilon}(x_i)\cap\pi^{-1}(m)\) para algún \(x_i\in\X\cap B_{\epsilon}(m)^c\).
+  Notar que \(x_i\in (T_m^{\perp})^{\oplus\epsilon}\cap B_{\epsilon}(m)^c\cap B_{\reach\MM}(m)\).
+  Considere las bolas tangentes a \(m\) de radio \(\reach\MM\) a cada lado del plano tangente \(T_m\). 
+  Llamemoslas \(B_{+}\) y \(B_{-}\). 
+  Luego, la vecindades de \(m\) en la superficie viven en \(B_{+}^c \cap B_{-}^{c}\) (de lo contrario
+  el \(\reach\MM\) podría haber sido menor, lo cual es una contradicción). De esta forma, 
+  \(x_i\) debe estar en el borde de \(B_{+}\) (o \(B_{-}\), el argumento es simétrico)
+  para que la distancia entre \(x\) y \(m\) se maximize. 
+
+  En resumen, la distancia entre \(x\) y \(m\) se maximiza cuando \(x_i\) vive en la intersección
+  entre el borde de \((T_m^{\perp})^{\oplus\epsilon}\) y el borde de \(B_{+}\). Queda ver cuál
+  es el máximo valor de \(\epsilon\) que garantiza que \(H(\cdot,x) \in \X^{\oplus\epsilon}\). 
+
+  \begin{wrapfigure}[7]{r}{0.3\textwidth}
+  \vspace{-0.7cm}
+    \centering
+    \begin{tikzpicture}
+      \draw (-2,0) -- (2,0) node[right] {\(T_m\)}; 
+      \draw (0,2) circle(2cm);
+      \draw[thick] (0,0) -- (0,2) node[above] {\small\(\reach\MM\)};
+      \draw (0,1.7) node[left] {\(x\)};
+      \draw (0,0) node[below] {\(m\)};
+      \draw (0,1.7) -- +(-20:1.9cm) node[midway,above] {\(\epsilon\)} node[right] {\(x_i\)};
+      \draw (0,0) -- ([yshift=1.7cm] -20:1.9cm) node[midway,below] {\(\theta\)};
+    \end{tikzpicture}
+  \end{wrapfigure}
+
+  Sea \(A\) la distancia entre \(x\) y \(m\), \(b\) la distancia entre \(m\) y \(x_i\) y
+  \(\theta\) el ángulo entre \(T_m\) y \(x_i\). Notar que \(m\) y \(x_i\) está a distancia
+  \(\reach\MM\) del centro \(c_{+}\) de \(B_{+}\). Luego, el triángulo \((c_{+},m,x_i)\) es isóceles
+  y por lo tanto \(b = 2\reach\MM \sin(\alpha)\) donde \(\alpha\) es la mitad del ángulo \((m,c_{+},x_i)\).
+  Como el ángulo \((x_i,m,c_+)\) es \(\pi/2-\theta\), se sigue que \(\alpha = \theta\) puesto que
+  el ángulo desde \(m\) al punto medio de \(b\) y \(c_+\) es \(\pi/2\). Por lo tanto,
+  \(b = 2\reach\MM\sin(\theta)\). Se sigue que
+  \begin{alignat*}{1}
+    A 
+    &= b\sin(\theta) + \sqrt{\epsilon^2 - b^2\cos^2(\theta)}\\
+    &= 2\reach\MM\sin^2(\theta) + \sqrt{\epsilon^2 - 4\reach\MM^2\sin^2(\theta)\cos^2(\theta)}
+  \end{alignat*}
+  Podemos ver \(A\) como una función de \(\theta\) y optimizarla. Esto nos deja con
 
 \end{Demostracion}
 
@@ -550,7 +609,7 @@ donde \(L_f\) es una interpolación lineal de \(f\) en \(T\).
 
 \begin{Teorema}%[\cite{chenoptimal}]
   Sea \(\X\) un conjunto finito de \(\R^n\).  
-  El complejo de Delaunay~\ref{def:delaunay} es el que minimiza el error de interpolación
+  El complejo de Delaunay definido en~(Definición \ref{def:delaunay}) es el que minimiza el error de interpolación
   de la función \(\norm{\cdot}^2 \colon \conv \X \to \R\) entre todos los complejos simpliciales
   con conjunto de vértices en \(\X\). 
   \begin{displaymath}
