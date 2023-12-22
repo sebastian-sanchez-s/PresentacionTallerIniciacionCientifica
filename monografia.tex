@@ -1,6 +1,8 @@
 \documentclass[legalpaper,12pt]{article}
 
 % Page set up
+\usepackage{setspace}
+\setstretch{1.25}
 \usepackage[margin=2.5cm, top=1.5cm]{geometry}
 
 % Document font and symbols
@@ -620,5 +622,64 @@ donde \(L_f\) es una interpolación lineal de \(f\) en \(T\).
 \end{Teorema}
 
 \section{Bola de Cobertura Mínima}
+
+Consideremos \(n+1\) puntos \(a_0, \ldots, a_n\) de \(\R^n\) en posición general.
+Queremos encontrar la bola que circumscribe a estos puntos. Sea \(c\) el centro de
+tal bola. Luego,
+\begin{displaymath}
+  \norm{a_0 - c}^2 = \norm{a_i - c}^2 \quad\forall 1\le i\le n.
+\end{displaymath}
+Notando que \(\norm{x}^2 = \langle x,x \rangle\) tenemos que
+\begin{displaymath}
+  \norm{a_0}^2 + \norm{c}^2 - 2 \langle a_0, c \rangle
+  =
+  \norm{a_i}^2 + \norm{c}^2 - 2 \langle a_i, c \rangle
+\end{displaymath}
+Y por lo tanto \(c\) resuelve el sistema lineal
+\begin{displaymath}
+  \begin{bmatrix}
+    \vdash (a_1 - a_0)^T \dashv \\
+    \vdots\\
+    \vdash (a_n - a_0)^T \dashv \\
+  \end{bmatrix} c 
+  =
+  Ac
+  =
+  \frac{1}{2}
+  \begin{pmatrix}
+    \norm{a_1}^2 - \norm{a_0}^2\\ 
+    \vdots\\
+    \norm{a_n}^2 - \norm{a_0}^2\\ 
+  \end{pmatrix}
+\end{displaymath}
+
+Como los puntos están en posición general, la matriz \(A\) es invertible y siempre hay solución.
+Supongamos que tenemos \(k+1 < n+1\) puntos. Luego, \(\ker A\) se compone de los vectores
+
+\begin{wrapfigure}{r}{0.25\textwidth}
+  \begin{tikzpicture}[scale=2]
+    \clip(-1.1,1.4) rectangle (1.1,-0.5);
+    \draw[-,gray] (0,-.5) -- (0,1.1);
+    \draw[-,gray] (-1,0) -- (1, 0);
+    \draw (0,.5) circle(0.5cm);
+    \draw (-1.2,0.5) circle(1.3cm);
+    \draw[fill=black] (0,0) circle(1pt);
+    \draw[fill=black] (0,1) circle(1pt);
+    \draw[fill=black] (0.1,0.5) circle(1pt);
+  \end{tikzpicture}
+\end{wrapfigure}
+
+\noindent que viven en el espacio ortogonal a \(\aff(a_0, \dots, a_k)\). Más aún, el espacio
+ortogonal pasa por el centro de la \(k\)-bola que circumscribe a \(a_0, \dots, a_k\) en el 
+espacio afín que generan.
+
+Notar que la circumbola no es lo mismo que la bola de cobertura mínima. 
+Como contraejemplo, basta considerar los puntos \((0,0), (0,1)\) y \((0.1, 0.5)\) en \(\R^2\).
+Como ilustra la imagen de la derecha, la circumbola de los tres puntos es mucho más grande.
+
+\begin{Definicion}[Bola de Cobertura Mínima]
+  Sea \(\X\subset\R^n\) un conjunto finito. La bola de cobertura mínima de \(\X\), denotada
+  \(mb(\X)\) es la \(n\)-bola cerrada de menor radio tal que \(\X\subset mb(\X)\).
+\end{Definicion}
 
 \end{document}
