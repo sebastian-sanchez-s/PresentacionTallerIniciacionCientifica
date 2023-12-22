@@ -31,13 +31,14 @@
 \usepackage{etoolbox,mathtools}
 \usepackage[shortlabels]{enumitem}
 
+
 % Mdframed template
 \mdfsetup{innertopmargin=5pt,%
-	frametitlealignment=\raggedright,%
-	frametitlefont=\texttt,%
-	linewidth=2pt,%
-	topline=false,rightline=false, bottomline=false,%
-	frametitleaboveskip=\dimexpr-1\ht\strutbox\relax,}
+  frametitlealignment=\raggedright,%
+  frametitlefont=\texttt,%
+  linewidth=2pt,%
+  topline=false,rightline=false, bottomline=false,%
+  frametitleaboveskip=\dimexpr-1\ht\strutbox\relax,}
 
 %
 % Color
@@ -70,106 +71,114 @@
 % Environment
 %
 
+% -- Algorithm Env
+\newenvironment{Algoritmo}%
+{ \begin{figure}[H]
+  \centering
+  \begin{algorithmic}[1]}
+{\end{algorithmic}\end{figure} }
+
 % -- Theorem Env
 \newcounter{TheoremCounter}
 \newenvironment{Teorema}[1][]{%
-	\refstepcounter{TheoremCounter}%
-	\mdfsetup{%
-		frametitle={%
-		\tikz[baseline=(current bounding box.center),outer sep=0pt]
-		\node[rectangle,color=TheoremFontColor,fill=TheoremFrameColor]
-		{Teorema~\theTheoremCounter\ifstrempty{#1}{.}{:~#1}};},%
-		linecolor=TheoremFrameColor,%
-		backgroundcolor=TheoremBgColor,
-	}%
-	\begin{mdframed}[]\relax%
-	}{\end{mdframed}}
+  \refstepcounter{TheoremCounter}%
+  \mdfsetup{%
+    frametitle={%
+    \tikz[baseline=(current bounding box.center),outer sep=0pt]
+    \node[rectangle,color=TheoremFontColor,fill=TheoremFrameColor]
+    {Teorema~\theTheoremCounter\ifstrempty{#1}{.}{:~#1}};},%
+    linecolor=TheoremFrameColor,%
+    backgroundcolor=TheoremBgColor,
+  }%
+  \begin{mdframed}[]\relax%
+  }{\end{mdframed}}
 
 % -- Proposition Env
 \newcounter{PropositionCounter}
 \newenvironment{Proposicion}[1][]{%
-	\refstepcounter{PropositionCounter}%
-	\mdfsetup{%
-		frametitle={%
-		\tikz[baseline=(current bounding box.center),outer sep=0pt]
-		\node[rectangle,color=PropositionFontColor,fill=PropositionFrameColor]
-		{Proposición~\thePropositionCounter\ifstrempty{#1}{.}{:~#1}};},%
-		linecolor=PropositionFrameColor,%
-		backgroundcolor=PropositionBgColor,
-	}%
-	\begin{mdframed}[]\relax%
-	}{\end{mdframed}}
+  \refstepcounter{PropositionCounter}%
+  \mdfsetup{%
+    frametitle={%
+    \tikz[baseline=(current bounding box.center),outer sep=0pt]
+    \node[rectangle,color=PropositionFontColor,fill=PropositionFrameColor]
+    {Proposición~\thePropositionCounter\ifstrempty{#1}{.}{:~#1}};},%
+    linecolor=PropositionFrameColor,%
+    backgroundcolor=PropositionBgColor,
+  }%
+  \begin{mdframed}[]\relax%
+  }{\end{mdframed}}
 
 % -- Corollary Env
 \newcounter{CorollaryCounter}
 \newenvironment{Corolario}[1][]{%
-	\refstepcounter{CorollaryCounter}%
-	\mdfsetup{%
-		frametitle={%
-		\tikz[baseline=(current bounding box.center),outer sep=0pt]
-		\node[rectangle,color=CorollaryFontColor,fill=CorollaryFrameColor]
-		{Corolario~\theCorollaryCounter.\ifstrempty{#1}{}{:~(#1)}};},%
-		linecolor=CorollaryFrameColor,%
-		backgroundcolor=CorollaryBgColor,
-	}%
-	\begin{mdframed}[]\relax%
-	}{\end{mdframed}}
+  \refstepcounter{CorollaryCounter}%
+  \mdfsetup{%
+    frametitle={%
+    \tikz[baseline=(current bounding box.center),outer sep=0pt]
+    \node[rectangle,color=CorollaryFontColor,fill=CorollaryFrameColor]
+    {Corolario~\theCorollaryCounter.\ifstrempty{#1}{}{:~(#1)}};},%
+    linecolor=CorollaryFrameColor,%
+    backgroundcolor=CorollaryBgColor,
+  }%
+  \begin{mdframed}[]\relax%
+  }{\end{mdframed}}
 
 % -- Definition Env
 \newcounter{DefinitionCounter}
 \newenvironment{Definicion}[1][]{%
-	\refstepcounter{DefinitionCounter}%
-	\mdfsetup{%
-		frametitle={%
-		\tikz[baseline=(current bounding box.center),outer sep=0pt]
-		\node[rectangle,color=DefinitionFontColor,fill=DefinitionFrameColor]
-		{Definición~\theDefinitionCounter:~#1};},%
-		linecolor=DefinitionFrameColor,%
-		backgroundcolor=DefinitionBgColor,%
-	}%
-	\begin{mdframed}[]\relax%
-	}{\end{mdframed}}
+  \refstepcounter{DefinitionCounter}%
+  \mdfsetup{%
+    frametitle={%
+    \tikz[baseline=(current bounding box.center),outer sep=0pt]
+    \node[rectangle,color=DefinitionFontColor,fill=DefinitionFrameColor]
+    {Definición~\theDefinitionCounter:~#1};},%
+    linecolor=DefinitionFrameColor,%
+    backgroundcolor=DefinitionBgColor,%
+  }%
+  \begin{mdframed}[]\relax%
+  }{\end{mdframed}}
 
 % -- Proof Env
 \newenvironment{Demostracion}[1][]
 {%
-	{\noindent\ttfamily DEMOSTRACIÓN\ifstrempty{#1}{}{ DE #1}~}
-	\fontfamily{cmr}\selectfont
+\setstretch{1}
+  {\noindent\ttfamily DEMOSTRACIÓN\ifstrempty{#1}{}{ DE #1}~}
+  \fontfamily{cmr}\selectfont
 }%
 {%
   \newline
-  \tikz{\draw (0,0) -- (\linewidth,0) node[above] {\scriptsize\(\blacksquare\)};}
+  \tikz{\draw (0,0) -- (\textwidth,0) node[above] {\scriptsize\(\blacksquare\)};}
 }
 
 % Example Env
 \newcounter{ExampleCounter}
 \newenvironment{Ejemplo}[1][]%
 {
-	\refstepcounter{ExampleCounter}%
-	\mdfsetup{%
-		frametitle={%
-		\tikz[baseline=(current bounding box.center),outer sep=0pt]
-		\node[rectangle,fill=white]
-		{EJEMPLO \theExampleCounter\ifstrempty{#1}{}{:~#1}};},%
-		linecolor=ExampleColor,%
-		backgroundcolor=white,
-	}%
-	\begin{mdframed}[]\relax%
-	}{\end{mdframed}}
+  \refstepcounter{ExampleCounter}%
+  \mdfsetup{%
+    frametitle={%
+    \tikz[baseline=(current bounding box.center),outer sep=0pt]
+    \node[rectangle,fill=white]
+    {EJEMPLO \theExampleCounter\ifstrempty{#1}{}{:~#1}};},%
+    linecolor=ExampleColor,%
+    backgroundcolor=white,
+  }%
+  \begin{mdframed}[]\relax%
+  }{\end{mdframed}}
 
 % -- Exercise Env
 \newenvironment{Ejercicio}[1][]%
-	{%
-		\vspace{1ex}
-		\textcolor{ExerciseColor}{\hrule height 1pt}
-		\vspace{5pt}
-		{\noindent\texttt{EJERCICIOS}~}\\[1ex]
-	}%
-	{%
-		\vspace{5pt}
-		\textcolor{ExerciseColor}{\hrule height 1pt}
-		\vspace{1ex}
-	}%
+  {%
+    \vspace{1ex}
+    \textcolor{ExerciseColor}{\hrule height 1pt}
+    \vspace{5pt}
+    {\noindent\texttt{EJERCICIOS}~}\\[1ex]
+  }%
+  {%
+    \vspace{5pt}
+    \textcolor{ExerciseColor}{\hrule height 1pt}
+    \vspace{1ex}
+  }%
 
 % -- Aligned Cases
 \newcommand{\X}{\mathbb{X}}
@@ -313,13 +322,13 @@ A la colección de homeomorfimos \(\lbrace \phi_{\alpha} \rbrace_{\alpha}\) se l
 llama atlas. La misma variedad puede tener distintos atlases, por ello, una \(d\)-variedad
 diferenciable es una tupla \((\MM, A)\) donde \(A\) es un atlas diferenciable.
 
-Una \(d\)-variedad riemanniana es una tupla \((\MM,g)\) donde \(\MM\) es un \(d\)-variedad topológica
+Una \(d\)-variedad Riemanniana es una tupla \((\MM,g)\) donde \(\MM\) es un \(d\)-variedad topológica
 y \(g = \lbrace g_p \rbrace_{p\in \MM}\) es una collección de productos internos defindos positivos
 actuando sobre el espacio tangente de un punto \(p\in \MM\).
 \begin{displaymath}
   g_p \colon T_p \MM \times T_p \MM \to \R_{\ge 0}.
 \end{displaymath}
-A \(g\) se le dice métrica riemanniana o tensor de riemann. 
+A \(g\) se le dice métrica Riemanniana o tensor de Riemann. 
 
 \section{Complejos Fundamentales}
 
@@ -390,7 +399,7 @@ Con esta caracterización podemos probar el siguiente resultado bien conocido.
 
 Dado \(\MM \subset \R^n\) una superficie (con o sin frontera), denotamos
 por \(\Del_{\MM}(\X)\) al complejo formado por aquellos símplices cuyos objetos
-de Voronoi asociados que intersectan a \(\MM\). En símbolos:
+de Voronoi asociados intersectan a \(\MM\). En símbolos:
 \begin{displaymath}
   \Del_M(\X)
   \coloneqq
@@ -414,8 +423,8 @@ si se cumple lo anterior con \(X=\MM\) y \(X=\partial \MM\) si \(\MM\) tiene bor
 Decimos que \(\X\) tiene la propiedad de la bola cerrada con \(\MM\) si
 para cualquier \(\Y\subset\X\) se satisface que:
 \begin{enumerate}
-  \item \(\bigcap V_{\Y} \cap \MM\) es vacía o (homeomorfo) una \((d-\dim\Y)\)-bola cerrada y
-  \item \(\bigcap V_{\Y} \cap \partial\MM\) es vacía o (homeomorfo) a una \((d-\dim\Y - 1)\)-bola cerrada.
+  \item \(\bigcap V_{\Y} \cap \MM\) es vacía o (homeomorfo a) una \((d-\dim\Y)\)-bola cerrada y
+  \item \(\bigcap V_{\Y} \cap \partial\MM\) es vacía o (homeomorfo a) una \((d-\dim\Y - 1)\)-bola cerrada.
 \end{enumerate}
 
 \begin{Teorema}[Teorema 4.3 de~\cite{edelsbrunnershah}]
@@ -434,9 +443,24 @@ para cualquier \(\Y\subset\X\) se satisface que:
 
   \underline{Caso Base:} Definamos \(\KK_0 \coloneqq \left\{ e_{\Y} \colon \Y\subset\X, 
   \dim\Y = d, \bigcap V_{\Y}\cap \MM \ne \varnothing\right\}\) y consideremos
-  el mapa \(f_0 \colon B_0 \to \KK_0\) dado por \(\bigcap V_{\Y} \cap \MM \mapsto e_{\Y}\).
+  el mapa \(f_0 \colon B_0 \to \KK_0\) dado por \(\bigcap V_{\Y} \cap \MM \mapsto e_{\Y}\)
+  que es una biyección y por lo tanto el mapa inducido entre \(\bigcup B_0\) y \(\bigcup \KK_0\) es 
+  un homeomorfismo.
 
-  \underline{Paso Inductivo:} Sea \(1 \le j \le d-1\).
+  \underline{Paso Inductivo:} Sea \(1 \le j \le d-1\) y supongamos que \(f_j\colon \bigcup B_j \to \bigcup \KK_j\) 
+  ya ha sido construido. Seguiremos el siguiente algoritmo:
+  \begin{enumerate}[itemsep=1pt]
+    \item Inicializar \(\KK_{j+1} =\KK_{j}\). 
+    \item Escoger \(\Y\subset\X\) de dimensión \(d-(j+1)\) tal que \(F\coloneqq \bigcap V_{\Y}\cap \MM\) es no vacía
+      (y tal que \(e_{\Y}\not\in\KK_{j+1}\)). 
+    \item Agregar símplices a \(\KK_{j+1}\) de tal forma forma que haya un homeomorfismo \(f_{\Y}\) entre
+      \(F\) y los símplices agregados.
+    \item Volver al paso 2 si quedan símplices por revisar.
+    \item Pegar todos los homeomorfismos \(f_{\Y}\) para construir \(f_{j+1}\).
+  \end{enumerate}
+  Explicación del Paso 2: 
+
+  Definamos \(G \coloneqq \bigcap V_{\Y} \cap \partial\MM\). 
 \end{Demostracion}
 
 \subsection{Complejo de Cech y Rips}
@@ -464,7 +488,7 @@ y nos da que \(\Cech_{\epsilon} \simeq \bigcup_{x\in\X} B_{\epsilon}(x)
 = \X^{\oplus\epsilon}\), así que queda ver si \(\X^{\oplus\epsilon}\simeq \MM\).
 
 \begin{Teorema}[Proposición 3.2 de~\cite{smale}]
-  Sea \(\MM\) es una \(d\)-variedad riemanniana compacta y suave. Sea \(\X\) una muestra
+  Sea \(\MM\) es una \(d\)-variedad Riemanniana compacta y suave. Sea \(\X\) una muestra
   \(\epsilon\)-densa y \(\epsilon\)-ruidosa de \(\MM\) con \(\epsilon < \sqrt{3/5} \reach \MM\).
   Entonces
   \(\MM\) es un retracto por deformación de \(\X^{\oplus \epsilon}\). 
@@ -509,7 +533,7 @@ y nos da que \(\Cech_{\epsilon} \simeq \bigcup_{x\in\X} B_{\epsilon}(x)
     \begin{tikzpicture}
       \draw (-2,0) -- (2,0) node[right] {\(T_m\)}; 
       \draw (0,2) circle(2cm);
-      \draw[thick] (0,0) -- (0,2) node[above] {\small\(\reach\MM\)};
+      \draw[thick] (0,0) -- (0,2) node[above] {\(c_{+}\)};
       \draw (0,1.7) node[left] {\(x\)};
       \draw (0,0) node[below] {\(m\)};
       \draw (0,1.7) -- +(-20:1.9cm) node[midway,above] {\(\epsilon\)} node[right] {\(x_i\)};
@@ -518,18 +542,51 @@ y nos da que \(\Cech_{\epsilon} \simeq \bigcup_{x\in\X} B_{\epsilon}(x)
   \end{wrapfigure}
 
   Sea \(A\) la distancia entre \(x\) y \(m\), \(b\) la distancia entre \(m\) y \(x_i\) y
-  \(\theta\) el ángulo entre \(T_m\) y \(x_i\). Notar que \(m\) y \(x_i\) está a distancia
+  \(\theta\) el ángulo entre \(T_m\) y el segmento de \(\overline{m\,x_i}\). Notar que \(m\) y \(x_i\) está a distancia
   \(\reach\MM\) del centro \(c_{+}\) de \(B_{+}\). Luego, el triángulo \((c_{+},m,x_i)\) es isóceles
   y por lo tanto \(b = 2\reach\MM \sin(\alpha)\) donde \(\alpha\) es la mitad del ángulo \((m,c_{+},x_i)\).
   Como el ángulo \((x_i,m,c_+)\) es \(\pi/2-\theta\), se sigue que \(\alpha = \theta\) puesto que
-  el ángulo desde \(m\) al punto medio de \(b\) y \(c_+\) es \(\pi/2\). Por lo tanto,
+  el ángulo desde \(m\) al punto medio de \(\overline{m\,x_i}\) y \(c_+\) es \(\pi/2\). Por lo tanto,
   \(b = 2\reach\MM\sin(\theta)\). Se sigue que
   \begin{alignat*}{1}
     A 
     &= b\sin(\theta) + \sqrt{\epsilon^2 - b^2\cos^2(\theta)}\\
     &= 2\reach\MM\sin^2(\theta) + \sqrt{\epsilon^2 - 4\reach\MM^2\sin^2(\theta)\cos^2(\theta)}
   \end{alignat*}
-  Podemos ver \(A\) como una función de \(\theta\) y optimizarla. Esto nos deja con
+  Como la distancia entre \(x\) y \(x_i\) se maximiza en \(\epsilon\),
+  \(A\) se puede ver como una función de \(\theta\). Consideremos su derivada
+  \begin{align*}
+    A' 
+    &= 
+    4\reach\MM \sin(\theta)\cos(\theta) - 
+    \frac
+      {4\reach\MM^2\, 2\sin(\theta)\cos(\theta)(\cos^2\theta-\sin^2\theta)}
+      {2\sqrt{\epsilon^2 - 4 \reach\MM^2 \sin^2(\theta)\cos^2(\theta)}}
+    \\&=
+    2\reach\MM \sin(2\theta)
+    -
+    \frac
+      {2\reach\MM^2\, \sin(2\theta)\cos(2\theta)}
+      {\sqrt{\epsilon^2 - \reach\MM^2 \sin^2(2\theta)}}
+    \\&=
+    2\reach\MM\sin(2\theta)
+    \left( 1 - \frac{\reach\MM\,\cos(2\theta)}{\sqrt{\epsilon^2 - \reach\MM^2 \sin^2(2\theta)}} \right) 
+  \end{align*}
+  Notamos que \(\sin(2\theta) > 0\) pues \(\theta\) varía entre (cotas holgadas) \((0,\pi/2)\).
+  Dado que \(\epsilon < \tau\), tenemos que
+  \begin{displaymath}
+    \left( 1 - \frac{\reach\MM\,\cos(2\theta)}{\sqrt{\epsilon^2 - \reach\MM^2 \sin^2(2\theta)}} \right) 
+    < 0.
+  \end{displaymath}
+  Es decir, \(A\) es decreciente con \(\theta\). Luego, \(A\) alcanza su máximo valor
+  cuando \(\theta\) es lo más chico posible. Lo más pequeño que puede ser \(\theta\) es
+  hasta que \(b = 2\reach\MM \sin(\theta) = \epsilon\), pues de lo contrario \(x_i \in B_{\epsilon}(m)\). 
+  Evaluando en \(A\) vemos que su máximo valor es de \(\epsilon^2/\reach\MM\). 
+
+  Establecidas las relaciones anteriores podemos comenzar a mover \(\epsilon\) de tal forma que mantengamos
+  la máxima distancia \(A\). En particular, queremos ver para qué valores de \(\epsilon\) podemos
+  asegurar que el trayecto \(\overline{x\,m}\) está completamente contenido en \(\X^{\oplus\epsilon}\).
+
 
 \end{Demostracion}
 
@@ -617,7 +674,7 @@ donde \(L_f\) es una interpolación lineal de \(f\) en \(T\).
   \begin{displaymath}
     E_p(\conv\X, \Del(\X), \norm{\cdot}^2)
     =
-    \argmin_{T} E_p(\conv\X, T, \norm{\cdot}^2).
+    \min_{T} E_p(\conv\X, T, \norm{\cdot}^2).
   \end{displaymath}
 \end{Teorema}
 
